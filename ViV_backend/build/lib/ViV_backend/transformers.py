@@ -12,9 +12,15 @@ nltk.download('stopwords')
 import gensim
 import gensim.corpora as corpora
 from gensim.utils import simple_preprocess
+from gensim.models import CoherenceModel
 
 # spacy for lemmatization
 import spacy
+
+# Plotting tools
+import pyLDAvis
+import pyLDAvis.gensim_models  # don't skip this
+import matplotlib.pyplot as plt
 
 
 class Transformer:
@@ -22,11 +28,9 @@ class Transformer:
         self.nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
         self.bio = bio
 
-    def sent_to_words(self):
-        temp_list = []
-        for sentence in self.bio:
-            temp_list.append(gensim.utils.simple_preprocess(str(sentence), deacc=True))
-        return temp_list
+    def sent_to_words(self, sentences):
+        for sentence in sentences:
+            yield(gensim.utils.simple_preprocess(str(sentence), deacc=True))
 
     def lemmatization(self, texts, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV']):
         """https://spacy.io/api/annotation"""
@@ -43,9 +47,3 @@ class Transformer:
         id2word = corpora.Dictionary(texts)
         corpus =  id2word.doc2bow(self.bio['text'][0].split())
         return corpus
-
-
-if __name__ == 'main':
-    transformer = Transformer(pd.DataFrame({'text':["lets see here i have a lot of things going on in my life so i guess there is just too much to really say.  i'm just a fun loving person who works and works and studies and works a lot so yea i do need a little bit of time to have fun with new people once and a while and all lol"]})
-)
-    print(transformer.sent_to_words())
