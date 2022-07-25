@@ -6,7 +6,6 @@ from pprint import pprint
 
 # nltk
 import nltk
-nltk.download('stopwords')
 
 # Gensim
 import gensim
@@ -19,12 +18,18 @@ import spacy
 
 class Transformer:
     def __init__(self, bio):
+        nltk.download('stopwords')
         self.nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
         self.bio = bio
 
     def sent_to_words(self):
+        empty_list = []
         for sentence in self.bio:
-            yield(gensim.utils.simple_preprocess(str(sentence), deacc=True))
+            empty_list.append(gensim.utils.simple_preprocess(str(sentence), deacc=True))
+        return empty_list
+
+    def remove_stopwords(self, texts):
+        return [[word for word in simple_preprocess(str(doc)) if word not in stop_words] for doc in texts]
 
     def lemmatization(self, texts, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV']):
         """https://spacy.io/api/annotation"""
@@ -34,16 +39,12 @@ class Transformer:
             texts_out.append([token.lemma_ for token in doc if token.pos_ in allowed_postags])
         return texts_out
 
-    def remove_stopwords(self, texts):
-        return [[word for word in simple_preprocess(str(doc)) if word not in stop_words] for doc in texts]
-
     def to_corpus(self, texts):
         id2word = corpora.Dictionary(texts)
         corpus =  id2word.doc2bow(self.bio['text'][0].split())
         return corpus
 
 
-if __name__ == 'main':
-    transformer = Transformer(pd.DataFrame({'text':["lets see here i have a lot of things going on in my life so i guess there is just too much to really say.  i'm just a fun loving person who works and works and studies and works a lot so yea i do need a little bit of time to have fun with new people once and a while and all lol"]})
-)
+if __name__ == '__main__':
+    transformer = Transformer(["looking for someone to scroll endlessly through netflix. Or to yell out songs at the nearest karaoke. I enjoy cooking, travelling, singing, karaoke, gaming."])
     print(transformer.sent_to_words())
