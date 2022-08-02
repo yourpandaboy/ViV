@@ -10,7 +10,7 @@ from transformers import Transformer
 
 class Model:
     def __init__(self) -> None:
-        self.model = pickle.load('ViV_backend/data/optimal_model_45score.pkl','rb')
+        self.model = pickle.load('model_test.pkl','rb')
 
     def predict(self, text):
         self.transformer = Transformer([text])
