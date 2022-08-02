@@ -6,11 +6,11 @@ import spacy
 import gensim.models as models
 import nltk
 
-from transformers import Transformer
+from ViV_backend.transformers import Transformer
 
 class Model:
     def __init__(self) -> None:
-        self.model = pickle.load('model_test.pkl','rb')
+        self.model = pickle.load(open('model_test.pkl','rb'))
 
     def predict(self, text):
         self.transformer = Transformer([text])
@@ -24,4 +24,4 @@ class Model:
 
 if __name__ == '__main__':
     model = Model()
-    model.predict('')
+    print(model.predict("hey looking for friends here. male or female preferably people who likes to travel and outdoor activities."))
