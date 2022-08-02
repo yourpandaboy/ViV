@@ -46,10 +46,12 @@ class Transformer:
         corpus =  id2word.doc2bow(self.bio[0].split())
         return corpus
 
+    def transform(self):
+        self.sent_to_words()
+        self.remove_stopwords()
+        self.lemmatization()
+        return self.to_corpus()
 
 if __name__ == '__main__':
     transformer = Transformer(["looking for someone to scroll endlessly through netflix. Or to yell out songs at the nearest karaoke. I enjoy cooking, travelling, singing, karaoke, gaming."])
-    transformer.sent_to_words()
-    transformer.remove_stopwords()
-    transformer.lemmatization()
-    print(transformer.to_corpus())
+    print(transformer.transform())
