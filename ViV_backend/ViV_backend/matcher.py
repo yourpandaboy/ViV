@@ -3,7 +3,7 @@ import pandas as pd
 
 class Matcher():
     def __init__(self,bio) -> None:
-        self.main_df = pd.read_csv("df_final_cleaned.csv")
+        self.main_df = pd.read_csv("/home/nibuntu/code/yourpandaboy/ViV/ViV_backend/df_final_cleaned.csv")
         self.model = Model()
         self.bio = bio
 
@@ -26,6 +26,10 @@ class Matcher():
 
         filtered_df = self.main_df[self.main_df['Dominant_Topic'].isin(topics)]
         return filtered_df
+
+    def top_10_matches(self):
+        #return the top ten best matches from theoutput matches
+        pass
 
 if __name__ == '__main__':
     temp_matcher = Matcher(bio= 'hey looking for friends here. male or female preferably people who likes to travel and outdoor activities.')
