@@ -1,9 +1,9 @@
-from model import Model
+from ViV_backend.model import Model
 import pandas as pd
 
 class Matcher():
     def __init__(self,bio) -> None:
-        self.main_df = pd.read_csv("/home/nibuntu/code/yourpandaboy/ViV/ViV_backend/df_final_cleaned.csv")
+        self.main_df = pd.read_csv("/home/nortycute/code/yourpandaboy/ViV/df_final_cleaned.csv")
         self.model = Model()
         self.bio = bio
 
@@ -23,14 +23,23 @@ class Matcher():
 
         topics = topic_df['Dominant_No']
 
+        self.filtered_df = self.main_df[self.main_df['Dominant_Topic'].isin(topics)]
+        return self.filtered_df
 
-        filtered_df = self.main_df[self.main_df['Dominant_Topic'].isin(topics)]
-        return filtered_df
-
-    def top_10_matches(self):
+    def top_matches(self):
         #return the top ten best matches from theoutput matches
-        pass
+        matches_df = self.output_matches()
+        new_user_df = self. user_topic()
+        topics = new_user_df['Dominant_No']
+        bounds = new_user_df['Score']
+
+        dfs = []
+        for topic, bound in zip(topics, bounds):
+            df = matches_df[matches_df['Dominant_Topic']==topic][(matches_df['Topic_Perc_Contrib'] >= bound*.95) & (matches_df['Topic_Perc_Contrib'] <= bound*1.05)]
+            dfs.append(df)
+        best_matches = self.best_matches = pd.concat(dfs)
+        return best_matches
 
 if __name__ == '__main__':
-    temp_matcher = Matcher(bio= 'hey looking for friends here. male or female preferably people who likes to travel and outdoor activities.')
-    print(temp_matcher.output_matches())
+    temp_matcher = Matcher(bio= 'looking for someone to scroll endlessly through netflix. Or to yell out songs at the nearest karaoke. I enjoy cooking, travelling, singing, karaoke, gaming.')
+    print(temp_matcher.top_matches())

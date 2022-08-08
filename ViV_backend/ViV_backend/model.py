@@ -10,7 +10,7 @@ from ViV_backend.transformers import Transformer
 
 class Model:
     def __init__(self) -> None:
-        self.model = pickle.load(open('model_test.pkl','rb'))
+        self.model = pickle.load(open('/home/nortycute/code/yourpandaboy/ViV/model_test.pkl','rb'))
 
     def predict(self, text):
         self.transformer = Transformer([text])
