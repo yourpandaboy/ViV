@@ -31,4 +31,4 @@ def download_blob(bucket_name, source_blob_name, destination_file_name):
 
 
 if __name__ == "__main__":
-    download_blob('viv-data69', 'final_df_cleaned.csv', 'df_final_cleaned.csv')
+    download_blob('viv-data69', 'ViV_latest.pkl', 'ViV_latest.pkl')
