@@ -8,9 +8,13 @@ import nltk
 
 from ViV_backend.transformers import Transformer
 
+from ViV_backend.utilities import download_blob
+
 class Model:
-    def __init__(self) -> None:
-        self.model = pickle.load(open('/home/nortycute/code/yourpandaboy/ViV/ViV_latest.pkl','rb'))
+    def __init__(self, dl_new = False) -> None:
+        if dl_new:
+            download_blob('viv-data69','ViV_latest.pkl','models/ViV_latest.pkl')
+        self.model = pickle.load(open('models/ViV_latest.pkl','rb'))
 
     def predict(self, text):
         self.transformer = Transformer([text])
@@ -23,5 +27,5 @@ class Model:
 
 
 if __name__ == '__main__':
-    model = Model()
+    model = Model(dl_new=True)
     print(model.predict("hey looking for friends here. male or female preferably people who likes to travel and outdoor activities."))
