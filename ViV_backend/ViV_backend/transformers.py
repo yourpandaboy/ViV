@@ -1,3 +1,4 @@
+from faulthandler import disable
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -15,13 +16,19 @@ from gensim.utils import simple_preprocess
 # spacy for lemmatization
 import spacy
 from nltk.corpus import stopwords
+import en_core_web_sm
+
+#trial
+from ViV_backend.nltkmodules import Stopwords
 
 class Transformer:
     def __init__(self, bio):
-        self.nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
+        #self.nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
+        #nlp = spacy.load(r'C:\Users\ssc\AppData\Local\Continuum\anaconda3\Lib\site-packages\en_core_web_sm\en_core_web_sm-2.2.0')
+        self.nlp = en_core_web_sm.load(disable=['parser','ner'])
         self.bio = bio
-        self.stopwords = stopwords.words('english')
-
+        #self.stopwords = stopwords.words('english')
+        self.stopwords = Stopwords().activate_stopwords()
 
     def sent_to_words(self):
         temp_list = []
