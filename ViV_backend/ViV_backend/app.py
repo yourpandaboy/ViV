@@ -1,6 +1,8 @@
 from hashlib import new
 from tkinter import N
 import pandas as pd
+from regex import F
+from soupsieve import match
 import streamlit as st
 from ViV_backend.matcher import Matcher
 
@@ -62,7 +64,19 @@ preference_df= a,b,c,d
 
 st.write(pd.DataFrame(preference_dict))
 
-matches = Matcher(bio).top_matches()
-st.write(matches)
-st.write(matches.shape)
+matches_df = Matcher(bio).top_matches()
+matches_df['sex'] = matches_df['sex'].map({1:'Male',2:'Female'})
+st.write(matches_df)
+st.write(matches_df.shape)
+
+filtered_df = matches_df[(matches_df['sex'] == d) &( matches_df['age'].between(a,b)) & (matches_df['status'] == c.lower())]
+st.write(filtered_df)
+
+front_list=['Text_x','age','status','sex','location']
+front_df = filtered_df[front_list]
+front_df.sample(frac=1).reset_index(drop=True) #shuffle
+st.write(front_df)
+st.write(front_df.shape)
+st.write(front_df['Text_x'])
 st.button('finished')
+# mai profile = Simple is the best. Great food, drinks and people make my life fabulous. i like bar hopping, summer night, winter events, movie theatre's atmosphere, eat, drinks and sometimes cooking and board games
