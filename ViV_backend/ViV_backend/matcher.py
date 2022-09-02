@@ -3,7 +3,7 @@ import pandas as pd
 
 class Matcher():
     def __init__(self,bio,) -> None:
-        self.main_df = pd.read_csv("data/df_final_cleaned.csv")
+        self.main_df = pd.read_csv("../data/df_final_cleaned.csv")
         self.model = Model()
         self.bio = bio
 
