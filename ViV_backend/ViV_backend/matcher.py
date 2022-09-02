@@ -2,9 +2,9 @@ from ViV_backend.model import Model
 import pandas as pd
 
 class Matcher():
-    def __init__(self,bio,redownloadmodel=False) -> None:
-        self.main_df = pd.read_csv("data/df_final_cleaned.csv")
-        self.model = Model(redownloadmodel)
+    def __init__(self,bio,) -> None:
+        self.main_df = pd.read_csv("..data/df_final_cleaned.csv")
+        self.model = Model()
         self.bio = bio
 
     def user_topic(self, bio = None):
