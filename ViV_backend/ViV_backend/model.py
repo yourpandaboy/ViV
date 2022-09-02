@@ -16,7 +16,7 @@ class Model:
             #download_blob('viv-data69','ViV_latest.pkl','models/ViV_latest.pkl')
         #self.model = pickle.load(open('../models/ViV_latest.pkl','rb'))
 
-        self.model = pickle.load(open('../models/ViV_latest.pkl','rb'))
+        self.model = pickle.load(open('models/ViV_latest.pkl','rb'))
 
     def predict(self, text):
         self.transformer = Transformer([text])
