@@ -14,16 +14,21 @@ def new_user(name,bio,age,status,pref_age_start,pref_age_end,pref_sex,pref_statu
     age = int(age)
     pref_age_end = int(pref_age_end)
     pref_age_start = int(pref_age_start)
+    status = pref_status.lower()
     if age < 18:
         return 'Go back to your mama.'
 
-    if pref_sex.lower() == 'male':
-        pref_sex = 1
-    pref_sex = 2
+    tmp = 'male'
+    sex = 0
+    if pref_sex.lower() == tmp:
+        sex = 1
+    else:
+        sex = 2
 
     temp_matcher = Matcher(bio).top_matches()
 
-    filtered_df = temp_matcher[(temp_matcher['sex'] == pref_sex) & (temp_matcher['age'].between(pref_age_start,pref_age_end)) & (temp_matcher['status'] == pref_status.lower())]
+    filtered_df = temp_matcher[(temp_matcher['sex'] == sex) & (temp_matcher['age'].between(pref_age_start,pref_age_end)) & (temp_matcher['status'] == status)]
+
     return filtered_df.to_dict(orient='dict')
 # @app.get("/get_bio")
 # def get_bio(bio):
