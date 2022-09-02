@@ -14,7 +14,7 @@ class Model:
     def __init__(self, dl_new = False) -> None:
         if dl_new:
             download_blob('viv-data69','ViV_latest.pkl','models/ViV_latest.pkl')
-        self.model = pickle.load(open('models/ViV_latest.pkl','rb'))
+        self.model = pickle.load(open('../models/ViV_latest.pkl','rb'))
 
         #self.model = pickle.load(open('/home/nortycute/code/yourpandaboy/ViV/model_test.pkl','rb'))
     def predict(self, text):
